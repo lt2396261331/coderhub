@@ -19,7 +19,7 @@ class MomentController {
     ctx.body = result
   }
   async list(ctx, next) {
-    const {offset, size} = ctx.query
+    const { offset, size } = ctx.query
     // 查询列表
     const result = await momentService.getMomentList(offset, size)
 
@@ -41,6 +41,26 @@ class MomentController {
     // 2.删除内容
     const result = await momentService.remove(momentId)
     ctx.body = result
+  }
+
+  async addLabels(ctx, next) {
+    // 1.获取标签和动态id
+    const labels = ctx.labels
+    const { momentId } = ctx.params
+    
+    // 2.添加所有的标签
+    for(let label of labels) {
+      // 2.1判断标签是否已经存在
+      const isExist = await momentService.hasLabel(momentId, label.id)
+      if (!isExist) {
+        await momentService.addLabel(momentId, label.id)
+      }
+    }
+
+    ctx.body = {
+      status: 0,
+      message: '给动态添加标签成功~'
+    }
   }
 }
 

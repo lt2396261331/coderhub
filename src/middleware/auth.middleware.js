@@ -86,7 +86,6 @@ const verifyPermission = async (ctx, next) => {
   } catch (error) {
     return ctx.app.emit('error', error, ctx)
   }
-
 }
 
 
