@@ -10,7 +10,8 @@ const {
   detail,
   update,
   remove,
-  addLabels
+  addLabels,
+  fileInfo
 } = require('../controller/moment.controller')
 
 const {
@@ -30,5 +31,8 @@ momentRouter.delete('/:momentId', verifyAuth, verifyPermission, remove)
 
 // 给动态添加标签的接口
 momentRouter.post('/lables/:momentId', verifyAuth, verifyPermission, verifyLabelExists, addLabels)
+
+// 动态配图
+momentRouter.get('/images/:filename', fileInfo)
 
 module.exports = momentRouter
